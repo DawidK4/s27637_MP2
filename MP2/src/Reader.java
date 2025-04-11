@@ -2,6 +2,8 @@ import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 public class Reader {
+    private static int idCounter = 1;
+
     private int id;
     private String name;
     private String surname;
@@ -10,22 +12,18 @@ public class Reader {
     private String readerCardNum;
     private LocalDate registrationDate;
 
-    public Reader(int id, String name, String surname, String email, String pesel, String readerCardNum, LocalDate registrationDate) {
-        this.setId(id);
-        this.setName(name);
-        this.setSurname(surname);
-        this.setEmail(email);
-        this.setPesel(pesel);
-        this.setReaderCardNum(readerCardNum);
-        this.setRegistrationDate(registrationDate);
+    public Reader(String name, String surname, String email, String pesel, String readerCardNum, LocalDate registrationDate) {
+        this.id = idCounter++;
+        setName(name);
+        setSurname(surname);
+        setEmail(email);
+        setPesel(pesel);
+        setReaderCardNum(readerCardNum);
+        setRegistrationDate(registrationDate);
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id; // uniqueness can be handled elsewhere if needed
     }
 
     public String getName() {

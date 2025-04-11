@@ -3,6 +3,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Librarian {
+    private static int idCounter = 1;
+
     private int id;
     private String name;
     private String surname;
@@ -10,21 +12,17 @@ public class Librarian {
     private String telephone;
     private LocalDate hireDate;
 
-    public Librarian(int id, String name, String surname, String email, String telephone, LocalDate hireDate) {
-        this.setId(id);
-        this.setName(name);
-        this.setSurname(surname);
-        this.setEmail(email);
-        this.setTelephone(telephone);
-        this.setHireDate(hireDate);
+    public Librarian(String name, String surname, String email, String telephone, LocalDate hireDate) {
+        this.id = idCounter++;
+        setName(name);
+        setSurname(surname);
+        setEmail(email);
+        setTelephone(telephone);
+        setHireDate(hireDate);
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id; // You can later implement uniqueness validation if needed
     }
 
     public String getName() {
@@ -32,10 +30,10 @@ public class Librarian {
     }
 
     public void setName(String name) {
-        if (name == null || name.isEmpty()) {
+        if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty!");
         }
-        this.name = name;
+        this.name = name.trim();
     }
 
     public String getSurname() {
@@ -43,10 +41,10 @@ public class Librarian {
     }
 
     public void setSurname(String surname) {
-        if (surname == null || surname.isEmpty()) {
+        if (surname == null || surname.trim().isEmpty()) {
             throw new IllegalArgumentException("Surname cannot be null or empty!");
         }
-        this.surname = surname;
+        this.surname = surname.trim();
     }
 
     public String getEmail() {
@@ -54,13 +52,13 @@ public class Librarian {
     }
 
     public void setEmail(String email) {
-        if (email == null || email.isEmpty()) {
+        if (email == null || email.trim().isEmpty()) {
             throw new IllegalArgumentException("Email cannot be null or empty!");
         }
         if (!isValidEmail(email)) {
             throw new IllegalArgumentException("Please provide a valid e-mail!");
         }
-        this.email = email;
+        this.email = email.trim();
     }
 
     public String getTelephone() {
@@ -79,8 +77,8 @@ public class Librarian {
     }
 
     public void setHireDate(LocalDate hireDate) {
-        if (hireDate == null || LocalDate.now().isBefore(hireDate)) {
-            throw new IllegalArgumentException("Hire date cannot be null or greater than today!");
+        if (hireDate == null || hireDate.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Hire date cannot be null or in the future!");
         }
         this.hireDate = hireDate;
     }
