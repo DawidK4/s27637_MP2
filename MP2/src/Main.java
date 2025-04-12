@@ -1,5 +1,11 @@
+import Bank.Banker;
+import Bank.Client;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        Banker banker = new Banker(1, "Kowalski", "Jan");
+        Client client = new Client("00000", "Dawid", "Kucharski", banker);
+
+
     }
 }

@@ -1,20 +1,35 @@
 package Bank;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Banker {
     private int id;
     private String name;
     private String surname;
-    private ArrayList<Client> serves;
+    private Set<Client> serves;
 
-    public Banker(int id, String surname, String name) {
+    public Banker(int id, String surname, String name, Set<Client> clients) {
         setId(id);
         setSurname(surname);
         setName(name);
+        this.serves = new HashSet<>(clients); // Initialize as HashSet
+    }
+
+    public Banker(int id, String name, String surname, Client client) {
+        setId(id);
+        setName(name);
+        setSurname(surname);
+        this.serves = new HashSet<>();
+        addClient(client);
+    }
+
+    public Banker(int id, String name, String surname) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.serves = new HashSet<>();
     }
 
     public int getId() {
@@ -50,21 +65,27 @@ public class Banker {
         this.surname = surname;
     }
 
-    // Association
-    public List<Client> getClients(){
-        return Collections.unmodifiableList(serves);
+    // Association with Client
+    public Set<Client> getClients() {
+        return Collections.unmodifiableSet(serves);
     }
 
-    public void addClient(Client newClient){
-        if (!serves.contains(newClient)){
+    public void addClient(Client newClient) {
+        if (newClient == null) {
+            throw new IllegalArgumentException("New client must not be null!");
+        }
+
+        if (!serves.contains(newClient)) {
             serves.add(newClient);
             newClient.setBanker(this);
         }
     }
 
     public void removeClient(Client oldClient) {
+        if (oldClient == null) return;
         if (serves.contains(oldClient)) {
             serves.remove(oldClient);
+            oldClient.setBanker(null);
         } else {
             throw new IllegalArgumentException("Banker does not serve the client " + oldClient.getName());
         }
