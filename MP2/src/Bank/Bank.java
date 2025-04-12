@@ -1,10 +1,31 @@
 package Bank;
 
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
 public class Bank {
     private String name;
+    private Map<String, Client> dealsWith = new TreeMap<>();
 
     public Bank(String name) {
         setName(name);
+    }
+
+    public void addClient(Client newClient) {
+        if (!dealsWith.containsKey(newClient.getClientNumber())) {
+            dealsWith.put(newClient.getClientNumber(), newClient);
+
+            newClient.setBank(this);
+        }
+    }
+
+    public Client findClient(String clientNumber) throws Exception{
+        if (!dealsWith.containsKey(clientNumber)) {
+            throw new Exception("Unable to find a client with number: " + clientNumber);
+        }
+
+        return dealsWith.get(clientNumber);
     }
 
     public String getName() {

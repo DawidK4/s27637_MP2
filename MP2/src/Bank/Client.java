@@ -9,6 +9,7 @@ public class Client {
     private String surname;
     private Banker isServedBy;
     private Set<PersonalAccount> owns;
+    private Bank deals;
 
     public Client(String clientNumber, String name, String surname, Banker isServedBy) {
         setClientNumber(clientNumber);
@@ -92,6 +93,17 @@ public class Client {
         } else {
             throw new IllegalArgumentException("New banker must not be null!");
         }
+    }
+
+    // Association with Bank
+    public Bank getBank(){
+        return this.deals;
+    }
+
+    public void setBank(Bank newBank){
+        if (newBank == null) throw new IllegalArgumentException("New bank must not be null!");
+
+        this.deals = newBank;
     }
 
     // Association with PersonalAccount
