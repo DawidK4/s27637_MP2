@@ -1,5 +1,5 @@
-import Bank.Banker;
-import Bank.Client;
+import bank.Banker;
+import bank.Client;
 
 public class Main {
     public static void main(String[] args) {

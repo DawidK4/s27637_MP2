@@ -1,9 +1,11 @@
-package Bank;
+package bank;
+
+import utils.ObjectPlusPlus;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Client {
+public class Client extends ObjectPlusPlus {
     private String clientNumber;
     private String name;
     private String surname;

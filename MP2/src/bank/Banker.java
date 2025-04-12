@@ -1,10 +1,12 @@
-package Bank;
+package bank;
+
+import utils.ObjectPlusPlus;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Banker {
+public class Banker extends ObjectPlusPlus {
     private int id;
     private String name;
     private String surname;

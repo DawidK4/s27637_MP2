@@ -1,10 +1,11 @@
-package Bank;
+package bank;
+
+import utils.ObjectPlusPlus;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
-public class Bank {
+public class Bank extends ObjectPlusPlus {
     private String name;
     private Map<String, Client> dealsWith = new TreeMap<>();
 
