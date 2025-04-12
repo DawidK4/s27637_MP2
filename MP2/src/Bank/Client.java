@@ -5,6 +5,14 @@ public class Client {
     private String clientNumber;
     private String name;
     private String surname;
+    private Banker isServedBy;
+
+    public Client(String clientNumber, String name, String surname, Banker isServedBy) {
+        setClientNumber(clientNumber);
+        setName(name);
+        setSurname(surname);
+        setBanker(isServedBy);
+    }
 
     public String getClientNumber() {
         return clientNumber;
@@ -37,5 +45,18 @@ public class Client {
             throw new IllegalArgumentException("Surname must be between 2 and 50 characters");
         }
         this.surname = surname;
+    }
+
+    // Association
+    public Banker getBanker() {
+        return isServedBy;
+    }
+
+    public void setBanker(Banker newBanker){
+        if (!(this.isServedBy == null)){
+            newBanker.removeClient(this);
+        }
+
+        this.isServedBy = newBanker;
     }
 }
