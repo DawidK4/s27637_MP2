@@ -7,6 +7,7 @@ import java.util.Set;
 
 public class Student extends ObjectPlusPlus {
     private String indexNum;
+    private static Set<String> allIndexNum = new HashSet<>();
     private String name;
     private String surname;
     private Set<SubjectStudent> attends = new HashSet<>();
@@ -17,18 +18,18 @@ public class Student extends ObjectPlusPlus {
         setSurname(surname);
     }
 
-    public void addSubject(SubjectStudent subject) throws Exception{
+    public void addSubject(SubjectStudent subject) throws Exception {
         if (subject == null) throw new IllegalArgumentException("Subject must not be null!");
 
         if (!attends.contains(subject)) {
             attends.add(subject);
             subject.setStudent(this);
         } else {
-            throw new Exception("Studnet is already assigned to the subject!");
+            throw new Exception("Student is already assigned to the subject!");
         }
     }
 
-    public void deleteSubject(SubjectStudent subject){
+    public void deleteSubject(SubjectStudent subject) {
         if (subject == null) throw new IllegalArgumentException("Subject must not be null!");
         attends.remove(subject);
     }
@@ -38,9 +39,16 @@ public class Student extends ObjectPlusPlus {
     }
 
     public void setIndexNum(String indexNum) {
-        if (indexNum == null || indexNum.isEmpty()) throw new IllegalArgumentException("Index number must not be null or empty!");
+        if (indexNum == null || indexNum.isEmpty()) {
+            throw new IllegalArgumentException("Index number must not be null or empty!");
+        }
+
+        if (allIndexNum.contains(indexNum)) {
+            throw new IllegalArgumentException("This index number already exists!");
+        }
 
         this.indexNum = indexNum;
+        allIndexNum.add(indexNum);
     }
 
     public String getName() {
