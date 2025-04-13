@@ -1,9 +1,11 @@
 package uni;
 
+import utils.ObjectPlusPlus;
+
 import java.util.HashSet;
 import java.util.Set;
 
-public class Subject {
+public class Subject extends ObjectPlusPlus {
     private String name;
     private String lecturerName;
     private Set<SubjectStudent> isAttendedBy = new HashSet<>();
@@ -13,12 +15,14 @@ public class Subject {
         setLecturerName(lecturerName);
     }
 
-    public void addStudent(SubjectStudent student) {
+    public void addStudent(SubjectStudent student) throws Exception{
         if (student == null) throw new IllegalArgumentException("Student must not be null!");
 
         if (!isAttendedBy.contains(student)){
             isAttendedBy.add(student);
             student.setSubject(this);
+        } else {
+            throw new Exception("Student is already assigned to the subject!");
         }
     }
 
