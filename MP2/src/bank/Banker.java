@@ -16,7 +16,7 @@ public class Banker extends ObjectPlusPlus {
         setId(id);
         setSurname(surname);
         setName(name);
-        this.serves = new HashSet<>(clients); // Initialize as HashSet
+        this.serves = new HashSet<>(clients);
     }
 
     public Banker(int id, String name, String surname, Client client) {
