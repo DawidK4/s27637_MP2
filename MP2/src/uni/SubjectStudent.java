@@ -15,27 +15,16 @@ public class SubjectStudent {
         setDateOfEnrollment(dateOfEnrollment);
     }
 
-    public void removeAssociation() {
-        Student oldStudent = this.student;
-        Subject oldSubject = this.subject;
-
+    void clearReferences() {
         this.student = null;
         this.subject = null;
-
-        if (oldStudent != null) {
-            oldStudent.deleteSubject(this);
-        }
-
-        if (oldSubject != null) {
-            oldSubject.deleteStudent(this);
-        }
     }
 
     public Student getStudent() {
         return student;
     }
 
-    public void setStudent(Student student) {
+    private void setStudent(Student student) {
         if (student == null) throw new IllegalArgumentException("Student must not be null!");
 
         this.student = student;
@@ -45,7 +34,7 @@ public class SubjectStudent {
         return subject;
     }
 
-    public void setSubject(Subject subject) {
+    private void setSubject(Subject subject) {
         if (subject == null) throw new IllegalArgumentException("Subject must not be null!");
 
         this.subject = subject;

@@ -114,6 +114,11 @@ public class Client extends ObjectPlusPlus {
         this.deals = newBank;
     }
 
+    public void removeBank() {
+        this.deals.removeClient(this.clientNumber);
+        this.deals = null;
+    }
+
     // Association with PersonalAccount
     public class PersonalAccount {
         private static Set<String> accountNumbers = new HashSet<>();

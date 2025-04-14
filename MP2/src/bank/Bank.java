@@ -34,6 +34,12 @@ public class Bank extends ObjectPlusPlus {
         return Collections.unmodifiableMap(this.dealsWith);
     }
 
+    public void removeClient(String clientNumber) {
+        Client oldClient = this.dealsWith.get(clientNumber);
+        oldClient.removeBank();
+        this.dealsWith.remove(clientNumber);
+    }
+
     public String getName() {
         return name;
     }

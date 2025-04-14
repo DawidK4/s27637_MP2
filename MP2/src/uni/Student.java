@@ -2,6 +2,7 @@ package uni;
 
 import utils.ObjectPlusPlus;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,24 +20,44 @@ public class Student extends ObjectPlusPlus {
         setSurname(surname);
     }
 
-    public void addSubject(SubjectStudent subject) throws Exception {
-        if (subject == null) throw new IllegalArgumentException("Subject must not be null!");
+    //add subject
+    public void addSubject(Subject newSubject, int finalGrade, LocalDate dateOfEnrollment) {
+        SubjectStudent subjectStudent = new SubjectStudent(this, newSubject, finalGrade, dateOfEnrollment);
+        attends.add(subjectStudent);
+        newSubject.addStudent(subjectStudent);
+    }
 
-        if (!attends.contains(subject)) {
-            attends.add(subject);
-            subject.setStudent(this);
-        } else {
-            throw new Exception("Student is already assigned to the subject!");
+    // helper method
+    public void addSubject(SubjectStudent subjectStudent){
+        attends.add(subjectStudent);
+    }
+
+    public Set<Subject> getSubjects() {
+        Set<Subject> temp = new HashSet<>();
+        attends.forEach(e -> temp.add(e.getSubject()));
+        return Collections.unmodifiableSet(temp);
+    }
+
+    public void deleteSubject(Subject subject) {
+        SubjectStudent toRemove = null;
+
+        for (SubjectStudent s : attends) {
+            if (s.getSubject().equals(subject)) {
+                toRemove = s;
+                break;
+            }
+        }
+
+        if (toRemove != null) {
+            attends.remove(toRemove);              // 1. student -> subjectStudent
+            subject.removeSubjectStudent(toRemove); // 2. subject -> subjectStudent
+
+            toRemove.clearReferences();             // 3. subjectStudent -> student i subject
         }
     }
 
-    public void deleteSubject(SubjectStudent subject) {
-        if (subject == null) throw new IllegalArgumentException("Subject must not be null!");
-        attends.remove(subject);
-    }
-
-    public Set<SubjectStudent> getSubjects() {
-        return Collections.unmodifiableSet(this.attends);
+    void removeSubjectStudent(SubjectStudent ss) {
+        attends.remove(ss);
     }
 
     public String getIndexNum() {

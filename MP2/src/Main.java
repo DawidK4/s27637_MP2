@@ -5,30 +5,30 @@ import uni.Subject;
 import uni.SubjectStudent;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-        // bank
-        Banker banker = new Banker(1, "Kowalski", "Jan");
-        Client client = new Client("00000", "Dawid", "Kucharski", banker);
+        Student student = new Student("00000", "Dawid", "Kucharski");
+        Subject subject = new Subject("MAS", "Trzaska");
 
-        // uni
-        Student student = new Student("s123", "Anna", "Kowalska");
-        Subject subject = new Subject("Math", "Dr. Nowak");
+        student.addSubject(subject, 5, LocalDate.now());
+        // subject.addStudent(student)
 
-        SubjectStudent subjectStudent = new SubjectStudent(student, subject, 5, LocalDate.now());
+        Set<Subject> subjects = student.getSubjects();
+        Set<Student> students = subject.getStudents();
 
-        try {
-            student.addSubject(subjectStudent);
-            subject.addStudent(subjectStudent);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        subjects.forEach(s -> System.out.println(s.getName()));
+        students.forEach(s -> System.out.println(s.getName()));
 
-        subjectStudent.removeAssociation();
+        System.out.println("Testing deletion in Association with attribute");
+//        student.deleteSubject(subject);
+//        Set<Subject> subjects1 = student.getSubjects();
+//        subjects1.forEach(s -> System.out.println(s.getName()));
+        subject.deleteStudent(student);
+        Set<Student> students1 = subject.getStudents();
+        students1.forEach(s -> System.out.println(s.getName()));
 
-        System.out.println("After removing association:");
-        System.out.println(" - Student: " + subjectStudent.getStudent());
-        System.out.println(" - Subject: " + subjectStudent.getSubject());
+
     }
 }

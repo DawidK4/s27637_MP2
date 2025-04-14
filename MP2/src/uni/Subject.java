@@ -2,6 +2,7 @@ package uni;
 
 import utils.ObjectPlusPlus;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,24 +17,45 @@ public class Subject extends ObjectPlusPlus {
         setLecturerName(lecturerName);
     }
 
-    public void addStudent(SubjectStudent student) throws Exception{
-        if (student == null) throw new IllegalArgumentException("Student must not be null!");
+    // add students
+    public void addStudent(Student newStudent, int finalGrade, LocalDate dateOfEnrollment) {
+        SubjectStudent subjectStudent = new SubjectStudent(newStudent, this, finalGrade, dateOfEnrollment);
+        isAttendedBy.add(subjectStudent);
+        newStudent.addSubject(subjectStudent);
+    }
 
-        if (!isAttendedBy.contains(student)){
-            isAttendedBy.add(student);
-            student.setSubject(this);
-        } else {
-            throw new Exception("Student is already assigned to the subject!");
+    // helper method
+    public void addStudent(SubjectStudent subjectStudent){
+        isAttendedBy.add(subjectStudent);
+    }
+
+    public void deleteStudent(Student student) {
+        SubjectStudent toRemove = null;
+
+        for (SubjectStudent ss : isAttendedBy) {
+            if (ss.getStudent().equals(student)) {
+                toRemove = ss;
+                break;
+            }
+        }
+
+        if (toRemove != null) {
+            isAttendedBy.remove(toRemove);        // 1. subject -> subjectStudent
+            student.removeSubjectStudent(toRemove); // 2. student -> subjectStudent
+
+            toRemove.clearReferences();           // 3. subjectStudent -> nullify student & subject
         }
     }
 
-    public void deleteStudent(SubjectStudent student){
-        if (student == null) throw new IllegalArgumentException("Student must not be null!");
-        isAttendedBy.remove(student);
+
+    public Set<Student> getStudents() {
+        Set<Student> temp = new HashSet<>();
+        isAttendedBy.forEach(e -> temp.add(e.getStudent()));
+        return Collections.unmodifiableSet(temp);
     }
 
-    public Set<SubjectStudent> getStudents() {
-        return Collections.unmodifiableSet(this.isAttendedBy);
+    void removeSubjectStudent(SubjectStudent ss) {
+        isAttendedBy.remove(ss);
     }
 
     public String getName() {
