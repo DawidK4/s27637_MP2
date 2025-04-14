@@ -9,6 +9,7 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
+        // Association with attribute
         Student student = new Student("00000", "Dawid", "Kucharski");
         Subject subject = new Subject("MAS", "Trzaska");
 
@@ -28,7 +29,5 @@ public class Main {
         subject.deleteStudent(student);
         Set<Student> students1 = subject.getStudents();
         students1.forEach(s -> System.out.println(s.getName()));
-
-
     }
 }

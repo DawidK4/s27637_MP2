@@ -19,36 +19,23 @@ public class Client extends ObjectPlusPlus {
         setName(name);
         setSurname(surname);
         setBanker(isServedBy);
+        this.owns = new HashSet<>();
     }
 
     public PersonalAccount createPersonalAccount(String accountNumber, double balance) {
+        for (PersonalAccount pa : owns) {
+            if (pa.getAccountNumber().equals(accountNumber)) {
+                throw new IllegalArgumentException("Account with provided number already exists!");
+            }
+        }
+
         PersonalAccount personalAccount = new PersonalAccount(accountNumber, balance, this);
         owns.add(personalAccount);
-
         return personalAccount;
-    }
-
-    // Add account number validation, simply refactor
-    public PersonalAccount getPersonalAccount(String accountNumber) {
-        for (PersonalAccount pa : owns) {
-            if (pa.getAccountNumber().equals(accountNumber)) return pa;
-        }
-        // has to be fixed
-        return null;
     }
 
     public Set<PersonalAccount> getPersonalAccounts() {
         return Collections.unmodifiableSet(this.owns);
-    }
-
-    public void deletePersonalAccount(String accountNumber) {
-        for (PersonalAccount pa : owns) {
-            if (pa.getAccountNumber().equals(accountNumber)) {
-                owns.remove(pa);
-                pa.removeAssociation();
-                break;
-            }
-        }
     }
 
     public String getClientNumber() {
@@ -90,7 +77,6 @@ public class Client extends ObjectPlusPlus {
     }
 
     public void setBanker(Banker newBanker) {
-        // Prevents the loop
         if (this.isServedBy != null && !this.isServedBy.equals(newBanker)) {
             this.isServedBy.removeClient(this);
         }
@@ -104,13 +90,12 @@ public class Client extends ObjectPlusPlus {
     }
 
     // Association with Bank
-    public Bank getBank(){
+    public Bank getBank() {
         return this.deals;
     }
 
-    public void setBank(Bank newBank){
+    public void setBank(Bank newBank) {
         if (newBank == null) throw new IllegalArgumentException("New bank must not be null!");
-
         this.deals = newBank;
     }
 
@@ -119,7 +104,24 @@ public class Client extends ObjectPlusPlus {
         this.deals = null;
     }
 
-    // Association with PersonalAccount
+    public void deleteClient() {
+        for (PersonalAccount account : owns) {
+            account.removeAssociation();
+        }
+        owns.clear();
+    }
+
+    public void deletePersonalAccountByAccountNumber(String accountNumber) {
+        for (PersonalAccount account : owns) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                account.removeAssociation();
+                owns.remove(account);
+                break;
+            }
+        }
+    }
+
+    // PersonalAccount class (composed part of Client)
     public class PersonalAccount {
         private static Set<String> accountNumbers = new HashSet<>();
         private String accountNumber;
@@ -133,22 +135,20 @@ public class Client extends ObjectPlusPlus {
 
             setAccountNumber(accountNumber);
             setBalance(balance);
+            setClient(isOwnedBy);
         }
 
         public Client getClient() {
             return this.isOwnedBy;
         }
 
-        public void setClient(Client client){
+        public void setClient(Client client) {
             if (client == null) throw new IllegalArgumentException("Client cannot be null!");
             this.isOwnedBy = client;
         }
 
-        public void removeAssociation(){
-            for (String number : accountNumbers) {
-                if (number.equals(accountNumber)) accountNumbers.remove(number);
-            }
-
+        public void removeAssociation() {
+            accountNumbers.remove(accountNumber);
             this.isOwnedBy = null;
         }
 
@@ -161,6 +161,7 @@ public class Client extends ObjectPlusPlus {
                 throw new IllegalArgumentException("Account number must be between 5 and 20 characters");
             }
             this.accountNumber = accountNumber;
+            accountNumbers.add(accountNumber);
         }
 
         public double getBalance() {
