@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Client extends ObjectPlusPlus {
-    private String clientNumber;
+    private final String clientNumber;
     private String name;
     private String surname;
     private Banker isServedBy;
@@ -15,7 +15,11 @@ public class Client extends ObjectPlusPlus {
     private Bank deals;
 
     public Client(String clientNumber, String name, String surname, Banker isServedBy) {
-        setClientNumber(clientNumber);
+        if (clientNumber == null || clientNumber.length() < 5 || clientNumber.length() > 15) {
+            throw new IllegalArgumentException("Client number must be between 5 and 15 characters");
+        }
+        this.clientNumber = clientNumber;
+
         setName(name);
         setSurname(surname);
         setBanker(isServedBy);
@@ -40,13 +44,6 @@ public class Client extends ObjectPlusPlus {
 
     public String getClientNumber() {
         return clientNumber;
-    }
-
-    public void setClientNumber(String clientNumber) {
-        if (clientNumber == null || clientNumber.length() < 5 || clientNumber.length() > 15) {
-            throw new IllegalArgumentException("Client number must be between 5 and 15 characters");
-        }
-        this.clientNumber = clientNumber;
     }
 
     public String getName() {
@@ -81,11 +78,10 @@ public class Client extends ObjectPlusPlus {
             this.isServedBy.removeClient(this);
         }
 
+        this.isServedBy = newBanker;
+
         if (newBanker != null) {
-            this.isServedBy = newBanker;
             newBanker.addClient(this);
-        } else {
-            throw new IllegalArgumentException("New banker must not be null!");
         }
     }
 
