@@ -2,6 +2,7 @@ package uni;
 
 import utils.ObjectPlusPlus;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +33,10 @@ public class Student extends ObjectPlusPlus {
     public void deleteSubject(SubjectStudent subject) {
         if (subject == null) throw new IllegalArgumentException("Subject must not be null!");
         attends.remove(subject);
+    }
+
+    public Set<SubjectStudent> getSubjects() {
+        return Collections.unmodifiableSet(this.attends);
     }
 
     public String getIndexNum() {

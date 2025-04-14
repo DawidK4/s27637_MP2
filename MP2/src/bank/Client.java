@@ -2,6 +2,7 @@ package bank;
 
 import utils.ObjectPlusPlus;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,10 +37,15 @@ public class Client extends ObjectPlusPlus {
         return null;
     }
 
+    public Set<PersonalAccount> getPersonalAccounts() {
+        return Collections.unmodifiableSet(this.owns);
+    }
+
     public void deletePersonalAccount(String accountNumber) {
         for (PersonalAccount pa : owns) {
             if (pa.getAccountNumber().equals(accountNumber)) {
                 owns.remove(pa);
+                pa.removeAssociation();
                 break;
             }
         }
@@ -131,6 +137,14 @@ public class Client extends ObjectPlusPlus {
         public void setClient(Client client){
             if (client == null) throw new IllegalArgumentException("Client cannot be null!");
             this.isOwnedBy = client;
+        }
+
+        public void removeAssociation(){
+            for (String number : accountNumbers) {
+                if (number.equals(accountNumber)) accountNumbers.remove(number);
+            }
+
+            this.isOwnedBy = null;
         }
 
         public String getAccountNumber() {

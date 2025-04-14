@@ -2,6 +2,7 @@ package bank;
 
 import utils.ObjectPlusPlus;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -27,6 +28,10 @@ public class Bank extends ObjectPlusPlus {
         }
 
         return dealsWith.get(clientNumber);
+    }
+
+    public Map<String, Client> getClients() {
+        return Collections.unmodifiableMap(this.dealsWith);
     }
 
     public String getName() {
