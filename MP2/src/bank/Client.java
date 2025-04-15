@@ -1,13 +1,14 @@
 package bank;
 
-import utils.ObjectPlusPlus;
+import utils.ObjectPlus;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Client extends ObjectPlus {
+public class Client extends ObjectPlus implements Serializable {
     private final String clientNumber;
     private String name;
     private String surname;
@@ -101,6 +102,14 @@ public class Client extends ObjectPlus {
         }
     }
 
+    public void removeBanker() {
+        if (isServedBy != null) {
+            Banker oldBanker = this.isServedBy;
+            this.isServedBy = null;
+            oldBanker.removeClient(this);
+        }
+    }
+
     // Association with Bank
     public Bank getBank() {
         return this.deals;
@@ -118,6 +127,7 @@ public class Client extends ObjectPlus {
     public void deleteClient() {
         for (PersonalAccount account : owns) {
             account.removeAssociation();
+            ObjectPlus.removeFromExtent(account);
         }
         owns.clear();
     }
@@ -135,7 +145,7 @@ public class Client extends ObjectPlus {
     }
 
     // PersonalAccount class (composed part of Client)
-    public class PersonalAccount extends ObjectPlus{
+    public class PersonalAccount extends ObjectPlus implements Serializable{
         private static final Set<String> accountNumbers = new HashSet<>();
         private String accountNumber;
         private double balance;
@@ -156,7 +166,7 @@ public class Client extends ObjectPlus {
             return this.isOwnedBy;
         }
 
-        public void setClient(Client client) {
+        private void setClient(Client client) {
             if (client == null) throw new IllegalArgumentException("Client cannot be null!");
             this.isOwnedBy = client;
         }

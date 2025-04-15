@@ -1,17 +1,20 @@
 package bank;
 
-import utils.ObjectPlusPlus;
+import utils.ObjectPlus;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Bank extends ObjectPlus {
+public class Bank extends ObjectPlus implements Serializable {
+    private String swiftNumber;
     private String name;
     private Map<String, Client> dealsWith = new TreeMap<>();
 
-    public Bank(String name) {
+    public Bank(String swiftNumber, String name) {
         super();
+        setSwiftNumber(swiftNumber);
         setName(name);
     }
 
@@ -57,5 +60,21 @@ public class Bank extends ObjectPlus {
         }
 
         this.name = name;
+    }
+
+    public String getSwiftNumber() {
+        return swiftNumber;
+    }
+
+    public void setSwiftNumber(String swiftNumber) {
+        if (swiftNumber.isEmpty() || swiftNumber == null) {
+            throw new IllegalArgumentException("Swift number must not be null or empty!");
+        }
+
+        if (swiftNumber.trim().length() <= 3 ){
+            throw new IllegalArgumentException("Swift number has to contain at least 4 digits!");
+        }
+
+        this.swiftNumber = swiftNumber;
     }
 }

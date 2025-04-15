@@ -1,13 +1,14 @@
 package uni;
 
-import utils.ObjectPlusPlus;
+import utils.ObjectPlus;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Student extends ObjectPlus {
+public class Student extends ObjectPlus implements Serializable {
     private String indexNum;
     private static Set<String> allIndexNum = new HashSet<>();
     private String name;

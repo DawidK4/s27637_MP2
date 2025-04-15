@@ -27,6 +27,14 @@ public class ObjectPlus implements Serializable {
         extent.add(this);
     }
 
+    // My method
+    public static void removeFromExtent(ObjectPlus obj) {
+        Class<? extends ObjectPlus> theClass = obj.getClass();
+        if (allExtents.containsKey(theClass)) {
+            allExtents.get(theClass).remove(obj);
+        }
+    }
+
     public static void writeExtents(ObjectOutputStream stream) throws IOException {
         stream.writeObject(allExtents);
     }

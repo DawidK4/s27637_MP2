@@ -1,13 +1,14 @@
 package uni;
 
-import utils.ObjectPlusPlus;
+import utils.ObjectPlus;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Subject extends ObjectPlus {
+public class Subject extends ObjectPlus implements Serializable {
     private String name;
     private String lecturerName;
     private Set<SubjectStudent> isAttendedBy = new HashSet<>();

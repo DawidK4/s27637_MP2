@@ -1,12 +1,13 @@
 package bank;
 
-import utils.ObjectPlusPlus;
+import utils.ObjectPlus;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Banker extends ObjectPlus {
+public class Banker extends ObjectPlus implements Serializable {
     private int id;
     private String name;
     private String surname;

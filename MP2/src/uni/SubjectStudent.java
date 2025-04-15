@@ -1,8 +1,11 @@
 package uni;
 
+import utils.ObjectPlus;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class SubjectStudent extends ObjectPlus{
+public class SubjectStudent extends ObjectPlus implements Serializable {
     private Student student;
     private Subject subject;
     private int finalGrade;
