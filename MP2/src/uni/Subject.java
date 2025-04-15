@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Subject extends ObjectPlusPlus {
+public class Subject extends ObjectPlus {
     private String name;
     private String lecturerName;
     private Set<SubjectStudent> isAttendedBy = new HashSet<>();

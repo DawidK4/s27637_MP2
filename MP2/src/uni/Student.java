@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Student extends ObjectPlusPlus {
+public class Student extends ObjectPlus {
     private String indexNum;
     private static Set<String> allIndexNum = new HashSet<>();
     private String name;

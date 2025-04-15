@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Client extends ObjectPlusPlus {
+public class Client extends ObjectPlus {
     private final String clientNumber;
     private String name;
     private String surname;
@@ -135,7 +135,7 @@ public class Client extends ObjectPlusPlus {
     }
 
     // PersonalAccount class (composed part of Client)
-    public class PersonalAccount extends ObjectPlusPlus{
+    public class PersonalAccount extends ObjectPlus{
         private static final Set<String> accountNumbers = new HashSet<>();
         private String accountNumber;
         private double balance;

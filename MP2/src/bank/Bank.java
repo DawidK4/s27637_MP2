@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Bank extends ObjectPlusPlus {
+public class Bank extends ObjectPlus {
     private String name;
     private Map<String, Client> dealsWith = new TreeMap<>();
 

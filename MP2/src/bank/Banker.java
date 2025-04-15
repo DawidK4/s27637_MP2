@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Banker extends ObjectPlusPlus {
+public class Banker extends ObjectPlus {
     private int id;
     private String name;
     private String surname;

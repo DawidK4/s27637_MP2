@@ -2,7 +2,7 @@ package uni;
 
 import java.time.LocalDate;
 
-public class SubjectStudent {
+public class SubjectStudent extends ObjectPlus{
     private Student student;
     private Subject subject;
     private int finalGrade;
