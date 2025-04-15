@@ -145,7 +145,7 @@ public class Client extends ObjectPlus implements Serializable {
     }
 
     // PersonalAccount class (composed part of Client)
-    public class PersonalAccount extends ObjectPlus implements Serializable{
+    public class PersonalAccount extends ObjectPlus implements Serializable {
         private static final Set<String> accountNumbers = new HashSet<>();
         private String accountNumber;
         private double balance;
