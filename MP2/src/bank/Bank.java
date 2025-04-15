@@ -11,6 +11,7 @@ public class Bank extends ObjectPlusPlus {
     private Map<String, Client> dealsWith = new TreeMap<>();
 
     public Bank(String name) {
+        super();
         setName(name);
     }
 

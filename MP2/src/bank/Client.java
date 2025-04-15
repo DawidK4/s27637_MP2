@@ -15,6 +15,7 @@ public class Client extends ObjectPlusPlus {
     private Bank deals;
 
     public Client(String clientNumber, String name, String surname, Banker isServedBy) {
+        super();
         if (clientNumber == null || clientNumber.length() < 5 || clientNumber.length() > 15) {
             throw new IllegalArgumentException("Client number must be between 5 and 15 characters");
         }
@@ -118,13 +119,14 @@ public class Client extends ObjectPlusPlus {
     }
 
     // PersonalAccount class (composed part of Client)
-    public class PersonalAccount {
+    public class PersonalAccount extends ObjectPlusPlus{
         private static Set<String> accountNumbers = new HashSet<>();
         private String accountNumber;
         private double balance;
         private Client isOwnedBy;
 
         public PersonalAccount(String accountNumber, double balance, Client isOwnedBy) {
+            super();
             for (String number : accountNumbers) {
                 if (number.equals(accountNumber)) throw new IllegalArgumentException("Account with provided number already exists!");
             }

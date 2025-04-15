@@ -9,6 +9,7 @@ public class SubjectStudent {
     private LocalDate dateOfEnrollment;
 
     public SubjectStudent(Student student, Subject subject, int finalGrade, LocalDate dateOfEnrollment) {
+        super();
         setStudent(student);
         setSubject(subject);
         setFinalGrade(finalGrade);

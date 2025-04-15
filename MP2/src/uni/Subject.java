@@ -13,6 +13,7 @@ public class Subject extends ObjectPlusPlus {
     private Set<SubjectStudent> isAttendedBy = new HashSet<>();
 
     public Subject(String name, String lecturerName) {
+        super();
         setName(name);
         setLecturerName(lecturerName);
     }

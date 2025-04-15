@@ -13,6 +13,7 @@ public class Banker extends ObjectPlusPlus {
     private Set<Client> serves;
 
     public Banker(int id, String surname, String name, Set<Client> clients) {
+        super();
         setId(id);
         setSurname(surname);
         setName(name);

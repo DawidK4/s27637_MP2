@@ -15,6 +15,7 @@ public class Student extends ObjectPlusPlus {
     private Set<SubjectStudent> attends = new HashSet<>();
 
     public Student(String indexNum, String name, String surname) {
+        super();
         setIndexNum(indexNum);
         setName(name);
         setSurname(surname);
