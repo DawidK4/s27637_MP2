@@ -89,8 +89,6 @@ public class Banker extends ObjectPlusPlus {
         if (serves.contains(oldClient)) {
             serves.remove(oldClient);
             oldClient.setBanker(null);
-        } else {
-            throw new IllegalArgumentException("Banker does not serve the client " + oldClient.getName());
         }
     }
 }

@@ -4,6 +4,7 @@ import utils.ObjectPlusPlus;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class Client extends ObjectPlusPlus {
@@ -36,6 +37,18 @@ public class Client extends ObjectPlusPlus {
 
         PersonalAccount personalAccount = new PersonalAccount(accountNumber, balance, this);
         owns.add(personalAccount);
+        return personalAccount;
+    }
+
+    public PersonalAccount getPersonalAccount(String accountNumber) {
+        PersonalAccount personalAccount = null;
+        for (PersonalAccount pa : owns) {
+            if (pa.getAccountNumber().equals(accountNumber)) {
+                personalAccount = pa;
+                break;
+            }
+        }
+
         return personalAccount;
     }
 
@@ -75,13 +88,15 @@ public class Client extends ObjectPlusPlus {
     }
 
     public void setBanker(Banker newBanker) {
-        if (this.isServedBy != null && !this.isServedBy.equals(newBanker)) {
+        if (this.isServedBy == newBanker) return;
+
+        if (this.isServedBy != null) {
             this.isServedBy.removeClient(this);
         }
 
         this.isServedBy = newBanker;
 
-        if (newBanker != null) {
+        if (newBanker != null && !newBanker.getClients().contains(this)) {
             newBanker.addClient(this);
         }
     }
@@ -97,7 +112,6 @@ public class Client extends ObjectPlusPlus {
     }
 
     public void removeBank() {
-        this.deals.removeClient(this.clientNumber);
         this.deals = null;
     }
 
@@ -109,10 +123,12 @@ public class Client extends ObjectPlusPlus {
     }
 
     public void deletePersonalAccountByAccountNumber(String accountNumber) {
-        for (PersonalAccount account : owns) {
-            if (account.getAccountNumber().equals(accountNumber)) {
-                account.removeAssociation();
-                owns.remove(account);
+        Iterator<PersonalAccount> it = owns.iterator();
+        while (it.hasNext()) {
+            PersonalAccount acc = it.next();
+            if (acc.getAccountNumber().equals(accountNumber)) {
+                acc.removeAssociation();
+                it.remove();
                 break;
             }
         }
@@ -120,7 +136,7 @@ public class Client extends ObjectPlusPlus {
 
     // PersonalAccount class (composed part of Client)
     public class PersonalAccount extends ObjectPlusPlus{
-        private static Set<String> accountNumbers = new HashSet<>();
+        private static final Set<String> accountNumbers = new HashSet<>();
         private String accountNumber;
         private double balance;
         private Client isOwnedBy;

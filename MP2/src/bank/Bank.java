@@ -16,6 +16,8 @@ public class Bank extends ObjectPlusPlus {
     }
 
     public void addClient(Client newClient) {
+        if (newClient == null) throw new IllegalArgumentException("Client cannot be null!");
+
         if (!dealsWith.containsKey(newClient.getClientNumber())) {
             dealsWith.put(newClient.getClientNumber(), newClient);
 
